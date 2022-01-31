@@ -13,7 +13,7 @@ class APIModel {
       {required this.id,
       required this.question,
       required this.multipleCorrectAnswers,
-      this.tip = "",
+      required this.tip,
       required this.difficulty,
       required this.explanation,
       required this.answers,
@@ -28,6 +28,7 @@ class APIModel {
             json["multiple_correct_answers"] == "false" ? false : true,
         difficulty: json["difficulty"] ?? "",
         explanation: json["explanation"] ?? "",
+        tip: json["tip"] ?? "",
         answers: [
           json["answers"]["answer_a"] ?? "",
           json["answers"]["answer_b"] ?? "",

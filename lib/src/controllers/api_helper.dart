@@ -4,11 +4,13 @@ import 'package:linuxquiz/src/keys.dart' as keys;
 import 'package:linuxquiz/src/models/api_model.dart';
 
 class NetWorkHelper {
-  final String url = "https://quizapi.io/api/v1/questions";
+  final String url = "https://quizapi.io/api/v1/questions?limit=20";
   final String apiKey = keys.apiKey;
 
-  Future<List<APIModel>> getData() async {
-    Uri link = Uri.parse(url);
+  Future<List<APIModel>> getData(String category, String diffi) async {
+    String cat = category == "Mix" ? "" : "&category=$category";
+    String difficulty = diffi == "" ? "" : "&difficulty=$diffi";
+    Uri link = Uri.parse(url + cat + difficulty);
     Map<String, String> header = {'X-Api-Key': apiKey};
     http.Response res = await http.get(link, headers: header);
 
@@ -30,6 +32,7 @@ class NetWorkHelper {
           multipleCorrectAnswers: false,
           difficulty: "Easy",
           explanation: "IDK",
+          tip: "",
           answers: ["asdas", "asnfklan", "haisnf", "askdlöas"],
           correctAnswers: ["true", "false", "false", "false", "false", "false"],
           choosenAnswers: []),
@@ -39,6 +42,7 @@ class NetWorkHelper {
           multipleCorrectAnswers: false,
           difficulty: "Easy",
           explanation: "Google",
+          tip: "",
           answers: ["asdklsad", "ahskdn", "asdmlas"],
           correctAnswers: ["false", "false", "true" "false", "false", "false"],
           choosenAnswers: [])

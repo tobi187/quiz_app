@@ -4,7 +4,11 @@ import 'package:linuxquiz/src/controllers/api_helper.dart';
 import 'package:linuxquiz/src/models/api_model.dart';
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({Key? key}) : super(key: key);
+  const QuizScreen({Key? key, required this.difficulty, required this.topic})
+      : super(key: key);
+
+  final String difficulty;
+  final String topic;
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -15,7 +19,7 @@ class _QuizScreenState extends State<QuizScreen> {
   int _currentPos = 0;
 
   Future fillList() async {
-    data = await NetWorkHelper().getData();
+    data = await NetWorkHelper().getData(widget.topic, widget.difficulty);
     setState(() {});
   }
 
@@ -55,7 +59,10 @@ class _QuizScreenState extends State<QuizScreen> {
                     height: height * 0.3,
                     child: Card(
                       child: Center(
-                          child: AutoSizeText(data[_currentPos].question)),
+                          child: AutoSizeText(
+                        data[_currentPos].question,
+                        style: const TextStyle(fontSize: 20),
+                      )),
                     ),
                   ),
                   Expanded(

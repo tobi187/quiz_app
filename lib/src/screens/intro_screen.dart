@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linuxquiz/src/screens/quiz_screen.dart';
+import 'package:linuxquiz/src/settings/settings_view.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({Key? key}) : super(key: key);
@@ -12,15 +13,15 @@ class IntroScreen extends StatefulWidget {
 
 class _IntroScreenState extends State<IntroScreen> {
   final List<String> topics = [
-    "Linux",
+    "Mix",
     "DevOps",
     "Networking",
-    "Programming",
+    "Code",
     "Cloud",
-    "Mix"
+    "Linux"
   ];
   String _selectedTopic = "Linux";
-  final List<String> difficultys = ["Easy", "Medium", "Hard", "Mix"];
+  final List<String> difficultys = ["Mix", "Easy", "Medium", "Hard"];
   String _selectedDifficulty = "Easy";
 
   @override
@@ -28,6 +29,17 @@ class _IntroScreenState extends State<IntroScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Linux / Programmer Quiz"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              // Navigate to the settings page. If the user leaves and returns
+              // to the app after it has been killed while running in the
+              // background, the navigation stack is restored.
+              Navigator.restorablePushNamed(context, SettingsView.routeName);
+            },
+          ),
+        ],
       ),
       body: Align(
         alignment: Alignment.center,
@@ -71,9 +83,14 @@ class _IntroScreenState extends State<IntroScreen> {
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const QuizScreen()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuizScreen(
+                        topic: _selectedTopic,
+                        difficulty: _selectedDifficulty,
+                      ),
+                    ),
+                  );
                 },
                 child: const Text("Start"))
           ],
