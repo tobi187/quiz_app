@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class APIModel {
   final int id;
   final String question;
@@ -9,9 +7,9 @@ class APIModel {
   final String explanation;
   final List answers;
   final List correctAnswers;
-  final List<int> choosenAnswers;
+  List<int> choosenAnswers;
 
-  const APIModel(
+  APIModel(
       {required this.id,
       required this.question,
       required this.multipleCorrectAnswers,
@@ -28,16 +26,16 @@ class APIModel {
         question: json["question"],
         multipleCorrectAnswers:
             json["multiple_correct_answers"] == "false" ? false : true,
-        difficulty: json["difficulty"],
-        explanation: json["explanation"],
+        difficulty: json["difficulty"] ?? "",
+        explanation: json["explanation"] ?? "",
         answers: [
-          json["answers"]["answer_a"],
-          json["answers"]["answer_b"],
-          json["answers"]["answer_c"],
-          json["answers"]["answer_d"],
-          json["answers"]["answer_e"],
-          json["answers"]["answer_f"],
-        ],
+          json["answers"]["answer_a"] ?? "",
+          json["answers"]["answer_b"] ?? "",
+          json["answers"]["answer_c"] ?? "",
+          json["answers"]["answer_d"] ?? "",
+          json["answers"]["answer_e"] ?? "",
+          json["answers"]["answer_f"] ?? "",
+        ].where((element) => element != "").toList(),
         correctAnswers: [
           json["correct_answers"]["answer_a_correct"],
           json["correct_answers"]["answer_b_correct"],
